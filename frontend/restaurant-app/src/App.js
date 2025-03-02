@@ -30,6 +30,11 @@ function App() {
     setCurrentPage("success");
   };
 
+  const handleGoBackToDashboard = () => {
+    setCurrentPage("dashboard");
+    setSelectedOrder(null);
+  };  
+
   return (
     <div className="container">
       {!isLoggedIn ? (
@@ -79,6 +84,7 @@ function App() {
         <div className="dashboard">
           <h1>Payment Success</h1>
           <p className="checkmark">✔</p>
+          <button onClick={handleGoBackToDashboard}>Back to Dashboard</button>
         </div>
       )}
     </div>
