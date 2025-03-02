@@ -6,6 +6,11 @@ function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [currentPage, setCurrentPage] = useState("dashboard");
   const [selectedOrder, setSelectedOrder] = useState(null);
+  const [campaignName, setCampaignName] = useState("");
+  const [durationStart, setDurationStart] = useState("");
+  const [durationEnd, setDurationEnd] = useState("");
+  const [description, setDescription] = useState("");
+  const [promotionCreated, setPromotionCreated] = useState(false);
 
   const orders = [
     { id: 101, items: ["Taco", "Soda"], total: "$4.99" },
@@ -13,39 +18,35 @@ function App() {
     { id: 202, items: ["Quesadilla", "Iced Tea"], total: "$7.89" }
   ];
 
-  const handleLogin = () => {
-    setIsLoggedIn(true);
-  };
+  const handleLogin = () => setIsLoggedIn(true);
 
-  const handleReceivePayment = () => {
-    setCurrentPage("selectOrder");
-  };
+  const handleReceivePayment = () => setCurrentPage("selectOrder");
 
   const handleOrderSelection = (order) => {
     setSelectedOrder(order);
     setCurrentPage("payment");
   };
 
-  const handlePayment = () => {
-    setCurrentPage("success");
-  };
+  const handlePayment = () => setCurrentPage("success");
 
   const handleGoBackToDashboard = () => {
     setCurrentPage("dashboard");
     setSelectedOrder(null);
-  };  
+  };
+
+  const handleGoToPromotions = () => setCurrentPage("promotions");
+  const handleCreatePromotionPage = () => setCurrentPage("createPromotion");
+  const handleCreatePromotion = () => {
+    setPromotionCreated(true);
+    setCurrentPage("promotionSuccess");
+  };
 
   return (
     <div className="container">
       {!isLoggedIn ? (
         <div className="login-box">
           <h1>Welcome</h1>
-          <input
-            type="text"
-            placeholder="Username"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-          />
+          <input type="text" placeholder="Username" value={username} onChange={(e) => setUsername(e.target.value)} />
           <input type="password" placeholder="Password" />
           <button onClick={handleLogin}>Enter</button>
         </div>
@@ -56,8 +57,29 @@ function App() {
           <div className="button-group">
             <button>Current Orders</button>
             <button onClick={handleReceivePayment}>Receive Payment</button>
-            <button>Promotional Campaigns</button>
+            <button onClick={handleGoToPromotions}>Promotional Campaigns</button>
           </div>
+        </div>
+      ) : currentPage === "promotions" ? (
+        <div className="dashboard">
+          <h1>Promotional Campaigns</h1>
+          <p className="overview-text">Ongoing Promotions</p>
+          {!promotionCreated && <p className="no-promotions">There are currently no campaigns.</p>}
+          <button onClick={handleCreatePromotionPage}>+ New Promotion</button>
+        </div>
+      ) : currentPage === "createPromotion" ? (
+        <div className="dashboard">
+          <h1>Create New Promotion</h1>
+          <input type="text" placeholder="Campaign Name" value={campaignName} onChange={(e) => setCampaignName(e.target.value)} />
+          <input type="date" value={durationStart} onChange={(e) => setDurationStart(e.target.value)} />
+          <input type="date" value={durationEnd} onChange={(e) => setDurationEnd(e.target.value)} />
+          <textarea placeholder="Description" value={description} onChange={(e) => setDescription(e.target.value)}></textarea>
+          <button onClick={handleCreatePromotion}>Create</button>
+        </div>
+      ) : currentPage === "promotionSuccess" ? (
+        <div className="dashboard">
+          <h1>Promotion Created!</h1>
+          <button onClick={handleGoBackToDashboard}>Back to Homepage</button>
         </div>
       ) : currentPage === "selectOrder" ? (
         <div className="dashboard">

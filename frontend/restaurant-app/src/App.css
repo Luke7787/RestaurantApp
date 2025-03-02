@@ -144,3 +144,11 @@ button:hover {
   color: #2A5298; /* Dark blue to match "Payment #166" */
   margin-top: 10px;
 }
+
+.no-promotions {
+  color: #ff4d4d; /* Red color to indicate no promotions */
+  font-weight: bold;
+  text-align: center;
+  margin-top: 10px;
+  font-size: 16px;
+}
