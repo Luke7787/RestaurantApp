@@ -95,3 +95,10 @@ button:hover {
   gap: 15px;
   margin-top: 25px;
 }
+
+.checkmark {
+  font-size: 48px; /* Increased size */
+  color: #28a745; /* Green color */
+  font-weight: bold;
+  margin-top: 20px;
+}
