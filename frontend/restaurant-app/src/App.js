@@ -13,32 +13,29 @@ function App() {
   const [promotionCreated, setPromotionCreated] = useState(false);
 
   const orders = [
-    { id: 101, items: ["Taco", "Soda"], total: "$4.99" },
-    { id: 166, items: ["Burrito", "Lemonade"], total: "$5.44" },
-    { id: 202, items: ["Quesadilla", "Iced Tea"], total: "$7.89" }
+    { id: 101, customer: "John Doe", items: ["Taco x2 - $3.44", "Drinks x2 - $1.44", "Tax - $0.50"], total: "$5.38" },
+    { id: 166, customer: "Jane Smith", items: ["Burrito - $4.99", "Lemonade - $1.50", "Tax - $0.50"], total: "$6.99" },
+    { id: 202, customer: "Mike Brown", items: ["Quesadilla - $6.89", "Iced Tea - $1.00", "Tax - $0.60"], total: "$8.49" }
   ];
 
   const handleLogin = () => setIsLoggedIn(true);
-
   const handleReceivePayment = () => setCurrentPage("selectOrder");
-
   const handleOrderSelection = (order) => {
     setSelectedOrder(order);
     setCurrentPage("payment");
   };
-
   const handlePayment = () => setCurrentPage("success");
-
-  const handleGoBackToDashboard = () => {
-    setCurrentPage("dashboard");
-    setSelectedOrder(null);
-  };
-
+  const handleGoBackToDashboard = () => setCurrentPage("dashboard");
   const handleGoToPromotions = () => setCurrentPage("promotions");
   const handleCreatePromotionPage = () => setCurrentPage("createPromotion");
   const handleCreatePromotion = () => {
     setPromotionCreated(true);
     setCurrentPage("promotionSuccess");
+  };
+  const handleGoToOrders = () => setCurrentPage("orders");
+  const handleSelectNewOrder = (order) => {
+    setSelectedOrder(order);
+    setCurrentPage("orderDetails");
   };
 
   return (
@@ -55,10 +52,43 @@ function App() {
           <h1>Hello, {username || "Guest"}!</h1>
           <p className="overview-text">Here is your quick business overview.</p>
           <div className="button-group">
-            <button>Current Orders</button>
+            <button onClick={handleGoToOrders}>Current Orders</button>
             <button onClick={handleReceivePayment}>Receive Payment</button>
             <button onClick={handleGoToPromotions}>Promotional Campaigns</button>
           </div>
+        </div>
+      ) : currentPage === "orders" ? (
+        <div className="dashboard">
+          <h1>Orders</h1>
+          {orders.map((order) => (
+            <button key={order.id} onClick={() => handleSelectNewOrder(order)}>
+              Order #{order.id} - {order.customer}
+            </button>
+          ))}
+          <p className="section-header">Finished Orders</p>
+          <button onClick={handleGoBackToDashboard}>Back to Homepage</button>
+        </div>
+      ) : currentPage === "orderDetails" ? (
+        <div className="dashboard">
+          <h1>Order #{selectedOrder.id}</h1>
+          <p>Customer: {selectedOrder.customer}</p>
+          <ul className="order-items">
+            {selectedOrder.items.map((item, index) => (
+              <li key={index}>{item}</li>
+            ))}
+          </ul>
+          <h2 className="total-price">Total: {selectedOrder.total}</h2>
+          <p>Pick up in 15 mins</p>
+          <div className="checkbox-container">
+  <label htmlFor="progress">Mark as In Progress</label>
+  <input type="checkbox" id="progress" />
+</div>
+<div className="checkbox-container">
+  <label htmlFor="complete">Mark as Complete</label>
+  <input type="checkbox" id="complete" />
+</div>
+
+          <button onClick={() => setCurrentPage("orders")}>Back to Orders</button>
         </div>
       ) : currentPage === "promotions" ? (
         <div className="dashboard">

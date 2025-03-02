@@ -152,3 +152,47 @@ button:hover {
   margin-top: 10px;
   font-size: 16px;
 }
+
+.section-header {
+  color: #2A5298; /* Adjust to a dark blue or any visible color */
+  font-weight: bold;
+  font-size: 18px;
+  margin-top: 10px;
+  text-align: center;
+}
+
+.dashboard p {
+  color: #2A5298; /* Ensures visibility for general text inside dashboards */
+}
+
+.dashboard label {
+  color: #2A5298; /* Ensures visibility for labels */
+}
+
+.checkbox-wrapper {
+  display: flex;
+  justify-content: center; /* Centers everything */
+  align-items: center;
+  gap: 20px; /* Adds space between checkboxes */
+  height: 100vh; /* Centers vertically */
+}
+
+.checkbox-container {
+  display: flex;
+  align-items: center;
+  gap: 8px; /* Space between text and checkbox */
+}
+
+.checkbox-container label {
+  font-size: 18px;
+  font-weight: 500;
+  color: #2A5298;
+  cursor: pointer;
+}
+
+.checkbox-container input {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  accent-color: #28a745; /* Green checkmark */
+}
