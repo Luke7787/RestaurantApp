@@ -3,12 +3,12 @@
 body {
   margin: 0;
   font-family: 'Poppins', sans-serif;
-  background: linear-gradient(to right, #1E3C72, #2A5298); /* Dark Blue Gradient */
+  background: linear-gradient(to right, #1E3C72, #2A5298);
   height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  color: #EAEAEA; /* Light Grayish White for readability */
+  color: #EAEAEA;
 }
 
 .container {
@@ -21,7 +21,7 @@ body {
 
 .login-box, .dashboard {
   text-align: center;
-  background: #F8F9FA; /* Soft Off-White */
+  background: #F8F9FA;
   padding: 35px;
   border-radius: 15px;
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
@@ -33,18 +33,18 @@ body {
 }
 
 h1 {
-  font-weight: 700; /* Bolder for emphasis */
-  color: #2A5298; /* Dark blue to match theme */
+  font-weight: 700;
+  color: #2A5298;
   margin-bottom: 15px;
-  font-size: 26px; /* Increased size for readability */
+  font-size: 26px;
   text-align: center;
 }
 
 .overview-text {
-  font-weight: 500; /* Medium weight */
+  font-weight: 500;
   color: #374151;
   margin-bottom: 20px;
-  font-size: 22px; /* Slightly larger for clarity */
+  font-size: 22px;
   text-align: center;
 }
 
@@ -96,9 +96,51 @@ button:hover {
   margin-top: 25px;
 }
 
+.order-items {
+  list-style: none;
+  padding: 0;
+  margin: 15px 0;
+  font-size: 20px;
+  font-weight: 500;
+  color: #374151;
+}
+
+.order-items li {
+  background: #dfe6e9;
+  padding: 10px;
+  margin: 5px 0;
+  border-radius: 8px;
+  width: 80%;
+  text-align: center;
+}
+
+.tap-to-pay {
+  background: #2A5298;
+  color: white;
+  padding: 12px 20px;
+  border-radius: 10px;
+  font-size: 20px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: 0.3s;
+  margin-top: 15px;
+}
+
+.tap-to-pay:hover {
+  background: #1E3C72;
+  transform: scale(1.07);
+}
+
 .checkmark {
-  font-size: 48px; /* Increased size */
-  color: #28a745; /* Green color */
+  font-size: 48px;
+  color: #28a745;
   font-weight: bold;
   margin-top: 20px;
+}
+
+.total-price {
+  font-size: 22px;
+  font-weight: 700;
+  color: #2A5298; /* Dark blue to match "Payment #166" */
+  margin-top: 10px;
 }

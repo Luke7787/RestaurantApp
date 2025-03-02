@@ -8,9 +8,9 @@ function App() {
   const [selectedOrder, setSelectedOrder] = useState(null);
 
   const orders = [
-    { id: 101, price: "$4.99" },
-    { id: 166, price: "$5.44" },
-    { id: 202, price: "$7.89" },
+    { id: 101, items: ["Taco", "Soda"], total: "$4.99" },
+    { id: 166, items: ["Burrito", "Lemonade"], total: "$5.44" },
+    { id: 202, items: ["Quesadilla", "Iced Tea"], total: "$7.89" }
   ];
 
   const handleLogin = () => {
@@ -57,7 +57,7 @@ function App() {
       ) : currentPage === "selectOrder" ? (
         <div className="dashboard">
           <h1>Receive Payment</h1>
-          <p className="overview-text">Select Order Number</p>
+          <p className="overview-text">Select Order</p>
           {orders.map((order) => (
             <button key={order.id} onClick={() => handleOrderSelection(order)}>
               Order #{order.id}
@@ -67,7 +67,12 @@ function App() {
       ) : currentPage === "payment" ? (
         <div className="dashboard">
           <h1>Payment #{selectedOrder.id}</h1>
-          <p className="overview-text">Total: {selectedOrder.price}</p>
+          <ul className="order-items">
+            {selectedOrder.items.map((item, index) => (
+              <li key={index}>{item}</li>
+            ))}
+          </ul>
+          <h2 className="total-price">Total: {selectedOrder.total}</h2>
           <button onClick={handlePayment} className="tap-to-pay">Tap to Pay</button>
         </div>
       ) : (
