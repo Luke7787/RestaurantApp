@@ -26,7 +26,7 @@ function App() {
       ) : (
         <div className="dashboard">
           <h1>Hello, {username || "Guest"}!</h1>
-          <p>Here is your quick business overview.</p>
+          <p className="overview-text">Here is your quick business overview.</p>
           <div className="button-group">
             <button>Current Orders</button>
             <button>Receive Payment</button>
