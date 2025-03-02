@@ -1,0 +1,86 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  background: #E3EDF7; /* Soft Light Blue */
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #2C3E50; /* Deep Blue-Gray */
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100vw;
+}
+
+.login-box, .dashboard {
+  text-align: center;
+  background: #FFFFFF; /* White for contrast */
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  width: 350px;
+  backdrop-filter: blur(10px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+h1 {
+  font-weight: 600;
+  color: #2C3E50;
+  margin-bottom: 20px;
+}
+
+input {
+  width: 90%;
+  max-width: 300px;
+  padding: 12px;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  outline: none;
+  background: white;
+  color: #333;
+  font-size: 16px;
+  text-align: left;
+  padding-left: 10px;
+}
+
+input::placeholder {
+  color: #888;
+}
+
+button {
+  width: 93%;
+  max-width: 350px;
+  margin-top: 10px;
+  padding: 12px;
+  background: #4A90E2; /* Cool Blue */
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+button:hover {
+  background: #357ABD; /* Slightly Darker Blue */
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.button-group {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 20px;
+}
