@@ -42,12 +42,15 @@ h1 {
 }
 
 .overview-text {
-  font-weight: 500;
-  color: #374151;
+  font-weight: bold; /* Make it stand out as a header */
+  color: #1F2937; /* Darker shade for better contrast */
   margin-bottom: 20px;
-  font-size: 22px;
+  font-size: 26px; /* Slightly larger for a header feel */
   text-align: center;
-  letter-spacing: 0.3px;
+  letter-spacing: 0.5px; /* Slightly more spacing for a refined look */
+  text-transform: uppercase; /* Makes it feel more like a header */
+  border-bottom: 2px solid #D1D5DB; /* Adds a subtle bottom border */
+  padding-bottom: 5px; /* Adds spacing to the bottom border */
 }
 
 input {
@@ -225,4 +228,14 @@ button:hover {
   border-radius: 5px;
   font-size: 16px;
   resize: vertical; /* Allows height resizing but keeps width fixed */
+}
+
+.campaign-box {
+  text-align: left; /* Aligns all text to the left */
+  padding: 15px; /* Adds spacing inside the box */
+  margin-bottom: 15px; /* Adds spacing between different campaigns */
+  border: 1px solid #ddd; /* Light border for a structured look */
+  border-radius: 8px; /* Softens corners */
+  background-color: #f9f9f9; /* Light background for better visibility */
+  max-width: 600px; /* Prevents text from stretching too wide */
 }

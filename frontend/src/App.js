@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "./App.css";
 
 function App() {
+  const [campaigns, setCampaigns] = useState([]);
   const [username, setUsername] = useState("");
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [currentPage, setCurrentPage] = useState("dashboard");
@@ -29,9 +30,34 @@ function App() {
   const handleGoToPromotions = () => setCurrentPage("promotions");
   const handleCreatePromotionPage = () => setCurrentPage("createPromotion");
   const handleCreatePromotion = () => {
-    setPromotionCreated(true);
+    if (!campaignName || !durationStart || !durationEnd || !description) {
+      alert("Please fill in all fields before creating a promotion.");
+      return;
+    }
+  
+    const newCampaign = {
+      id: campaigns.length + 1, // Unique ID
+      name: campaignName,
+      start: durationStart,
+      end: durationEnd,
+      description: description,
+    };
+  
+    setCampaigns([...campaigns, newCampaign]);
+    setCampaignName(""); // Reset fields
+    setDurationStart("");
+    setDurationEnd("");
+    setDescription("");
+    
+    // Show the success page first
     setCurrentPage("promotionSuccess");
+  
+    // Then, redirect to promotions after 2 seconds
+    setTimeout(() => {
+      setCurrentPage("promotions");
+    }, 2000);
   };
+  
   const handleGoToOrders = () => setCurrentPage("orders");
   const handleSelectNewOrder = (order) => {
     setSelectedOrder(order);
@@ -93,8 +119,23 @@ function App() {
         <div className="dashboard">
           <h1>Promotional Campaigns</h1>
           <p className="overview-text">Ongoing Promotions</p>
-          {!promotionCreated && <p className="no-promotions">There are currently no campaigns.</p>}
+          {campaigns.length === 0 ? (
+            <p className="no-promotions">There are currently no campaigns.</p>
+          ) : (
+            campaigns.map((campaign) => (
+              <div key={campaign.id} className="campaign-box">
+                <h1>{campaign.name}</h1>
+                <p>{campaign.description}</p>
+                <p>
+                <strong>Duration:</strong> {new Date(campaign.start).toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })} 
+{" to "} 
+{new Date(campaign.end).toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })}
+                </p>
+              </div>
+            ))
+          )}
           <button onClick={handleCreatePromotionPage}>+ New Promotion</button>
+          <button onClick={handleGoBackToDashboard}>Back to Homepage</button>
         </div>
       ) : currentPage === "createPromotion" ? (
         <div className="dashboard">
@@ -124,6 +165,7 @@ function App() {
               Order #{order.id}
             </button>
           ))}
+          <button onClick={handleGoBackToDashboard}>Back to Homepage</button>
         </div>
       ) : currentPage === "payment" ? (
         <div className="dashboard">
