@@ -216,3 +216,13 @@ button:hover {
   font-size: 18px;
   letter-spacing: 0.3px;
 }
+
+.description-textarea {
+  width: 100%; /* Makes it take full width of its container */
+  max-width: 330px; /* Adjust to match the width of your input field */
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+  resize: vertical; /* Allows height resizing but keeps width fixed */
+}

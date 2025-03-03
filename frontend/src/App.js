@@ -12,11 +12,11 @@ function App() {
   const [description, setDescription] = useState("");
   const [promotionCreated, setPromotionCreated] = useState(false);
 
-  const orders = [
+  const [orders, setOrders] = useState([
     { id: 101, customer: "John Doe", items: ["Taco x2 - $3.44", "Drinks x2 - $1.44", "Tax - $0.50"], total: "$5.38" },
     { id: 166, customer: "Jane Smith", items: ["Burrito - $4.99", "Lemonade - $1.50", "Tax - $0.50"], total: "$6.99" },
     { id: 202, customer: "Mike Brown", items: ["Quesadilla - $6.89", "Iced Tea - $1.00", "Tax - $0.60"], total: "$8.49" }
-  ];
+  ]);  
 
   const handleLogin = () => setIsLoggedIn(true);
   const handleReceivePayment = () => setCurrentPage("selectOrder");
@@ -24,7 +24,11 @@ function App() {
     setSelectedOrder(order);
     setCurrentPage("payment");
   };
-  const handlePayment = () => setCurrentPage("success");
+  const handlePayment = () => {
+    setOrders(orders.filter(order => order.id !== selectedOrder.id)); // Remove the paid order
+    setSelectedOrder(null); // Clear selected order
+    setCurrentPage("success");
+  };  
   const handleGoBackToDashboard = () => setCurrentPage("dashboard");
   const handleGoToPromotions = () => setCurrentPage("promotions");
   const handleCreatePromotionPage = () => setCurrentPage("createPromotion");
@@ -102,7 +106,12 @@ function App() {
           <input type="text" placeholder="Campaign Name" value={campaignName} onChange={(e) => setCampaignName(e.target.value)} />
           <input type="date" value={durationStart} onChange={(e) => setDurationStart(e.target.value)} />
           <input type="date" value={durationEnd} onChange={(e) => setDurationEnd(e.target.value)} />
-          <textarea placeholder="Description" value={description} onChange={(e) => setDescription(e.target.value)}></textarea>
+          <textarea 
+            className="description-textarea" 
+            placeholder="Description" 
+            value={description} 
+            onChange={(e) => setDescription(e.target.value)}
+          ></textarea>
           <button onClick={handleCreatePromotion}>Create</button>
         </div>
       ) : currentPage === "promotionSuccess" ? (
