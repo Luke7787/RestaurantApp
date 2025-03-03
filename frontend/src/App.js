@@ -90,9 +90,9 @@ function App() {
         <div className="dashboard">
           <h1>Orders</h1>
           {orders.map((order) => (
-            <button key={order.id} onClick={() => handleSelectNewOrder(order)}>
-              Order #{order.id} - {order.customer}
-            </button>
+          <button key={order.id} onClick={() => handleSelectNewOrder(order)}>
+            {order.customer} - Order #{order.id}
+          </button>
           ))}
           <p className="section-header">Finished Orders</p>
           <button onClick={handleGoBackToDashboard}>Back to Homepage</button>
@@ -165,7 +165,7 @@ function App() {
           <p className="overview-text">Select Order</p>
           {orders.map((order) => (
             <button key={order.id} onClick={() => handleOrderSelection(order)}>
-              Order #{order.id}
+              {order.customer} - Order #{order.id}
             </button>
           ))}
           <button onClick={handleGoBackToDashboard}>Back to Homepage</button>
