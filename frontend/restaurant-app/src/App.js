@@ -80,14 +80,13 @@ function App() {
           <h2 className="total-price">Total: {selectedOrder.total}</h2>
           <p>Pick up in 15 mins</p>
           <div className="checkbox-container">
-  <label htmlFor="progress">Mark as In Progress</label>
-  <input type="checkbox" id="progress" />
-</div>
-<div className="checkbox-container">
-  <label htmlFor="complete">Mark as Complete</label>
-  <input type="checkbox" id="complete" />
-</div>
-
+            <label htmlFor="progress">Mark as In Progress</label>
+            <input type="checkbox" id="progress" />
+          </div>
+          <div className="checkbox-container">
+            <label htmlFor="complete">Mark as Complete</label>
+            <input type="checkbox" id="complete" />
+          </div>
           <button onClick={() => setCurrentPage("orders")}>Back to Orders</button>
         </div>
       ) : currentPage === "promotions" ? (
@@ -135,7 +134,7 @@ function App() {
       ) : (
         <div className="dashboard">
           <h1>Payment Success</h1>
-          <p className="checkmark">✔</p>
+          <span className="checkmark">✔</span>
           <button onClick={handleGoBackToDashboard}>Back to Dashboard</button>
         </div>
       )}

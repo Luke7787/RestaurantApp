@@ -36,8 +36,9 @@ h1 {
   font-weight: 700;
   color: #2A5298;
   margin-bottom: 15px;
-  font-size: 26px;
+  font-size: 28px; /* Slightly larger for emphasis */
   text-align: center;
+  letter-spacing: 0.5px;
 }
 
 .overview-text {
@@ -46,6 +47,7 @@ h1 {
   margin-bottom: 20px;
   font-size: 22px;
   text-align: center;
+  letter-spacing: 0.3px;
 }
 
 input {
@@ -66,6 +68,7 @@ input {
 input::placeholder {
   color: #888;
   font-size: 16px;
+  font-style: italic;
 }
 
 button {
@@ -81,6 +84,7 @@ button {
   font-weight: 700;
   cursor: pointer;
   transition: all 0.3s ease;
+  letter-spacing: 0.3px;
 }
 
 button:hover {
@@ -107,11 +111,13 @@ button:hover {
 
 .order-items li {
   background: #dfe6e9;
-  padding: 10px;
-  margin: 5px 0;
+  padding: 12px;
+  margin: 6px 0;
   border-radius: 8px;
   width: 80%;
   text-align: center;
+  font-size: 18px;
+  font-weight: 500;
 }
 
 .tap-to-pay {
@@ -141,46 +147,52 @@ button:hover {
 .total-price {
   font-size: 22px;
   font-weight: 700;
-  color: #2A5298; /* Dark blue to match "Payment #166" */
+  color: #2A5298;
   margin-top: 10px;
 }
 
 .no-promotions {
-  color: #ff4d4d; /* Red color to indicate no promotions */
+  color: #B22222; /* Dark Red */
   font-weight: bold;
   text-align: center;
   margin-top: 10px;
-  font-size: 16px;
+  font-size: 18px; /* Slightly larger */
+  letter-spacing: 0.3px;
 }
 
 .section-header {
-  color: #2A5298; /* Adjust to a dark blue or any visible color */
+  color: #2A5298;
   font-weight: bold;
-  font-size: 18px;
+  font-size: 20px;
   margin-top: 10px;
   text-align: center;
+  letter-spacing: 0.4px;
 }
 
 .dashboard p {
-  color: #2A5298; /* Ensures visibility for general text inside dashboards */
+  color: #2A5298;
+  font-size: 18px;
+  font-weight: 500;
 }
 
 .dashboard label {
-  color: #2A5298; /* Ensures visibility for labels */
+  color: #2A5298;
+  font-size: 18px;
+  font-weight: 500;
 }
 
 .checkbox-wrapper {
   display: flex;
-  justify-content: center; /* Centers everything */
+  justify-content: center;
   align-items: center;
-  gap: 20px; /* Adds space between checkboxes */
-  height: 100vh; /* Centers vertically */
+  gap: 20px;
+  height: 100vh;
 }
 
 .checkbox-container {
   display: flex;
   align-items: center;
-  gap: 8px; /* Space between text and checkbox */
+  gap: 8px;
 }
 
 .checkbox-container label {
@@ -194,5 +206,13 @@ button:hover {
   width: 20px;
   height: 20px;
   cursor: pointer;
-  accent-color: #28a745; /* Green checkmark */
+  accent-color: #28a745;
+}
+
+.dashboard .no-promotions {
+  color: #B22222 !important;
+  font-weight: bold;
+  text-align: center;
+  font-size: 18px;
+  letter-spacing: 0.3px;
 }
