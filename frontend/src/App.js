@@ -172,7 +172,8 @@ function App() {
         </div>
       ) : currentPage === "payment" ? (
         <div className="dashboard">
-          <h1>Payment #{selectedOrder.id}</h1>
+          <h1>Payment for {selectedOrder.customer}</h1> {/* Display Customer's Name */}
+          <h1>Order #{selectedOrder.id}</h1>
           <ul className="order-items">
             {selectedOrder.items.map((item, index) => (
               <li key={index}>{item}</li>
@@ -180,7 +181,7 @@ function App() {
           </ul>
           <h2 className="total-price">Total: {selectedOrder.total}</h2>
           <button onClick={handlePayment} className="tap-to-pay">Tap to Pay</button>
-        </div>
+        </div>      
       ) : (
         <div className="dashboard">
           <h1>Payment Success</h1>
