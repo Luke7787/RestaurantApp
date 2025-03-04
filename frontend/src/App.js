@@ -99,25 +99,34 @@ function App() {
         </div>
       ) : currentPage === "orderDetails" ? (
         <div className="dashboard">
-          <h1>Order #{selectedOrder.id}</h1>
-          <p>Customer: {selectedOrder.customer}</p>
-          <ul className="order-items">
-            {selectedOrder.items.map((item, index) => (
-              <li key={index}>{item}</li>
-            ))}
-          </ul>
-          <h2 className="total-price">Total: {selectedOrder.total}</h2>
-          <p>Pick up in 15 mins</p>
-          <div className="checkbox-container">
-            <label htmlFor="progress">Mark as In Progress</label>
-            <input type="checkbox" id="progress" />
+          <div className="order-card">
+            <h1>Order #{selectedOrder.id}</h1>
+            <p><strong>Customer:</strong> {selectedOrder.customer}</p>
+            
+            <div className="order-items-box">
+              <h1>Items:</h1>
+              <ul className="order-items">
+                {selectedOrder.items.map((item, index) => (
+                  <li key={index}>{item}</li>
+                ))}
+              </ul>
+            </div>
+      
+            <h2 className="total-price">Total: {selectedOrder.total}</h2>
+            <p className="pickup-info">📍 Pick up in <strong>15 mins</strong></p>
+      
+            <div className="checkbox-container">
+              <label htmlFor="progress">Mark as In Progress</label>
+              <input type="checkbox" id="progress" />
+            </div>
+            <div className="checkbox-container">
+              <label htmlFor="complete">Mark as Complete</label>
+              <input type="checkbox" id="complete" />
+            </div>
+      
+            <button onClick={() => setCurrentPage("orders")} className="back-button">Back to Orders</button>
           </div>
-          <div className="checkbox-container">
-            <label htmlFor="complete">Mark as Complete</label>
-            <input type="checkbox" id="complete" />
-          </div>
-          <button onClick={() => setCurrentPage("orders")}>Back to Orders</button>
-        </div>
+        </div>      
       ) : currentPage === "promotions" ? (
         <div className="dashboard">
           <h1>Promotional Campaigns</h1>
@@ -153,6 +162,7 @@ function App() {
             onChange={(e) => setDescription(e.target.value)}
           ></textarea>
           <button onClick={handleCreatePromotion}>Create</button>
+          <button onClick={handleGoBackToDashboard}>Back to Homepage</button>
         </div>
       ) : currentPage === "promotionSuccess" ? (
         <div className="dashboard">
@@ -172,16 +182,24 @@ function App() {
         </div>
       ) : currentPage === "payment" ? (
         <div className="dashboard">
-          <h1>Payment for {selectedOrder.customer}</h1> {/* Display Customer's Name */}
+        <div className="payment-card">
+          <h1>💳 Payment for {selectedOrder.customer}</h1>
           <h1>Order #{selectedOrder.id}</h1>
-          <ul className="order-items">
-            {selectedOrder.items.map((item, index) => (
-              <li key={index}>{item}</li>
-            ))}
-          </ul>
+
+          <div className="order-items-box">
+            <h1>Items:</h1>
+            <ul className="order-items">
+              {selectedOrder.items.map((item, index) => (
+                <li key={index}>{item}</li>
+              ))}
+            </ul>
+          </div>
+
           <h2 className="total-price">Total: {selectedOrder.total}</h2>
+
           <button onClick={handlePayment} className="tap-to-pay">Tap to Pay</button>
-        </div>      
+        </div>
+      </div>      
       ) : (
         <div className="dashboard">
           <h1>Payment Success</h1>
