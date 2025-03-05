@@ -4,6 +4,8 @@ import "./App.css";
 function App() {
   const [campaigns, setCampaigns] = useState([]);
   const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [loginError, setLoginError] = useState("");
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [currentPage, setCurrentPage] = useState("dashboard");
   const [selectedOrder, setSelectedOrder] = useState(null);
@@ -11,35 +13,59 @@ function App() {
   const [durationStart, setDurationStart] = useState("");
   const [durationEnd, setDurationEnd] = useState("");
   const [description, setDescription] = useState("");
-  const [promotionCreated, setPromotionCreated] = useState(false);
+  const [dateError, setDateError] = useState("");
 
   const [orders, setOrders] = useState([
-    { id: 101, customer: "John Doe", items: ["Taco x2 - $3.44", "Drinks x2 - $1.44", "Tax - $0.50"], total: "$5.38" },
-    { id: 166, customer: "Jane Smith", items: ["Burrito - $4.99", "Lemonade - $1.50", "Tax - $0.50"], total: "$6.99" },
-    { id: 202, customer: "Mike Brown", items: ["Quesadilla - $6.89", "Iced Tea - $1.00", "Tax - $0.60"], total: "$8.49" }
+    { id: 101, customer: "John Doe", items: ["Taco x2 - $3.44", "Drinks x2 - $1.44", "Tax - $0.50"], total: "$5.38", status: "new" },
+    { id: 166, customer: "Jane Smith", items: ["Burrito - $4.99", "Lemonade - $1.50", "Tax - $0.50"], total: "$6.99", status: "new" },
+    { id: 202, customer: "Mike Brown", items: ["Quesadilla - $6.89", "Iced Tea - $1.00", "Tax - $0.60"], total: "$8.49", status: "new" }
   ]);
 
-  const handleLogin = () => setIsLoggedIn(true);
+  const handleLogin = () => {
+    if (!username.trim() || !password.trim()) {
+      setLoginError("Username and password are required");
+      return;
+    }
+    setLoginError("");
+    setIsLoggedIn(true);
+  };
+
   const handleReceivePayment = () => setCurrentPage("selectOrder");
   const handleOrderSelection = (order) => {
-    setSelectedOrder(order);
+    setSelectedOrder({...order});
     setCurrentPage("payment");
   };
+  
   const handlePayment = () => {
     setOrders(prevOrders => prevOrders.filter(order => order.id !== selectedOrder.id)); // Remove the paid order
     setCurrentPage("success");
   };  
+  
   const handleGoBackToDashboard = () => setCurrentPage("dashboard");
   const handleGoToPromotions = () => setCurrentPage("promotions");
   const handleCreatePromotionPage = () => setCurrentPage("createPromotion");
+  
   const handleCreatePromotion = () => {
+    
+    setDateError("");
+
+    
     if (!campaignName || !durationStart || !durationEnd || !description) {
       alert("Please fill in all fields before creating a promotion.");
       return;
     }
+    
+    
+    const startDate = new Date(durationStart);
+    const endDate = new Date(durationEnd);
+    
+    if (endDate <= startDate) {
+      setDateError("End date must be after the start date");
+      return;
+    }
   
     const newCampaign = {
-      id: campaigns.length + 1, // Unique ID
+      id: campaigns.length + 1, 
       name: campaignName,
       start: durationStart,
       end: durationEnd,
@@ -47,24 +73,43 @@ function App() {
     };
   
     setCampaigns([...campaigns, newCampaign]);
-    setCampaignName(""); // Reset fields
+    setCampaignName(""); 
     setDurationStart("");
     setDurationEnd("");
     setDescription("");
     
-    // Show the success page first
+    
     setCurrentPage("promotionSuccess");
   
-    // Then, redirect to promotions after 2 seconds
+    
     setTimeout(() => {
       setCurrentPage("promotions");
     }, 2000);
   };
   
   const handleGoToOrders = () => setCurrentPage("orders");
+  
   const handleSelectNewOrder = (order) => {
-    setSelectedOrder(order);
+    
+    setSelectedOrder({...order});
     setCurrentPage("orderDetails");
+  };
+
+  const handleOrderStatusChange = (orderId, status) => {
+    
+    setOrders(prevOrders => prevOrders.map(order => 
+      order.id === orderId ? { ...order, status: status } : order
+    ));
+    
+    
+    setSelectedOrder(prevSelected => ({
+      ...prevSelected,
+      status: status
+    }));
+  };
+
+  const handleGoBack = (page) => {
+    setCurrentPage(page);
   };
 
   return (
@@ -72,8 +117,19 @@ function App() {
       {!isLoggedIn ? (
         <div className="login-box">
           <h1>Welcome</h1>
-          <input type="text" placeholder="Username" value={username} onChange={(e) => setUsername(e.target.value)} />
-          <input type="password" placeholder="Password" />
+          <input 
+            type="text" 
+            placeholder="Username" 
+            value={username} 
+            onChange={(e) => setUsername(e.target.value)} 
+          />
+          <input 
+            type="password" 
+            placeholder="Password" 
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          {loginError && <p className="error-message">{loginError}</p>}
           <button onClick={handleLogin}>Enter</button>
         </div>
       ) : currentPage === "dashboard" ? (
@@ -91,7 +147,7 @@ function App() {
           <h1>Orders</h1>
           {orders.map((order) => (
           <button key={order.id} onClick={() => handleSelectNewOrder(order)}>
-            {order.customer} - Order #{order.id}
+            {order.customer} - Order #{order.id} {order.status !== "new" ? `(${order.status})` : ""}
           </button>
           ))}
           <p className="section-header">Finished Orders</p>
@@ -117,11 +173,29 @@ function App() {
       
             <div className="checkbox-container">
               <label htmlFor="progress">Mark as In Progress</label>
-              <input type="checkbox" id="progress" />
+              <input 
+                type="checkbox" 
+                id="progress" 
+                checked={selectedOrder.status === "in progress"}
+                onChange={() => {
+                  
+                  const newStatus = selectedOrder.status === "in progress" ? "new" : "in progress";
+                  handleOrderStatusChange(selectedOrder.id, newStatus);
+                }} 
+              />
             </div>
             <div className="checkbox-container">
               <label htmlFor="complete">Mark as Complete</label>
-              <input type="checkbox" id="complete" />
+              <input 
+                type="checkbox" 
+                id="complete" 
+                checked={selectedOrder.status === "complete"}
+                onChange={() => {
+                  
+                  const newStatus = selectedOrder.status === "complete" ? "new" : "complete";
+                  handleOrderStatusChange(selectedOrder.id, newStatus);
+                }}
+              />
             </div>
       
             <button onClick={() => setCurrentPage("orders")} className="back-button">Back to Orders</button>
@@ -152,9 +226,25 @@ function App() {
       ) : currentPage === "createPromotion" ? (
         <div className="dashboard">
           <h1>Create New Promotion</h1>
-          <input type="text" placeholder="Campaign Name" value={campaignName} onChange={(e) => setCampaignName(e.target.value)} />
-          <input type="date" value={durationStart} onChange={(e) => setDurationStart(e.target.value)} />
-          <input type="date" value={durationEnd} onChange={(e) => setDurationEnd(e.target.value)} />
+          <input 
+            type="text" 
+            placeholder="Campaign Name" 
+            value={campaignName} 
+            onChange={(e) => setCampaignName(e.target.value)} 
+          />
+          <label>Start Date:</label>
+          <input 
+            type="date" 
+            value={durationStart} 
+            onChange={(e) => setDurationStart(e.target.value)} 
+          />
+          <label>End Date:</label>
+          <input 
+            type="date" 
+            value={durationEnd} 
+            onChange={(e) => setDurationEnd(e.target.value)} 
+          />
+          {dateError && <p className="error-message">{dateError}</p>}
           <textarea 
             className="description-textarea" 
             placeholder="Description" 
@@ -162,7 +252,7 @@ function App() {
             onChange={(e) => setDescription(e.target.value)}
           ></textarea>
           <button onClick={handleCreatePromotion}>Create</button>
-          <button onClick={handleGoBackToDashboard}>Back to Homepage</button>
+          <button onClick={() => handleGoBack("promotions")}>Back to Promotions</button>
         </div>
       ) : currentPage === "promotionSuccess" ? (
         <div className="dashboard">
@@ -198,6 +288,7 @@ function App() {
           <h2 className="total-price">Total: {selectedOrder.total}</h2>
 
           <button onClick={handlePayment} className="tap-to-pay">Tap to Pay</button>
+          <button onClick={() => handleGoBack("selectOrder")} className="back-button">Back to Order Selection</button>
         </div>
       </div>      
       ) : (
