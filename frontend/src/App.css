@@ -488,3 +488,12 @@ button:hover:before {
   width: 95% !important;      /* same width as your global button style */
   max-width: 350px !important; /* keep the same max-width so they match */
 }
+
+.no-orders {
+  color: #B22222 !important;
+  font-weight: bold !important;
+  text-align: center !important;
+  margin-top: 10px !important;
+  font-size: 18px !important;
+  letter-spacing: 0.3px !important;
+}

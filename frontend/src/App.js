@@ -37,7 +37,11 @@ function App() {
   };
   
   const handlePayment = () => {
-    setOrders(prevOrders => prevOrders.filter(order => order.id !== selectedOrder.id)); // Remove the paid order
+    setOrders(prevOrders =>
+      prevOrders.map(order =>
+        order.id === selectedOrder.id ? { ...order, status: "complete" } : order
+      )
+    );
     setCurrentPage("success");
   };  
   
@@ -152,6 +156,7 @@ function App() {
             </button>
             <h1>Orders</h1>
             {/* Active orders (non-complete) */}
+            <p className="section-header">Ongoing Orders</p>
             <div className="active-orders">
               {orders
                 .filter(order => order.status !== "complete")
@@ -293,11 +298,18 @@ function App() {
         </button>
         <h1>Receive Payment</h1>
         <p className="overview-text">Select Order</p>
-        {orders.map((order) => (
-          <button key={order.id} onClick={() => handleOrderSelection(order)}>
-            {order.customer} - Order #{order.id}
-          </button>
-        ))}
+        {(() => {
+          const ongoingOrders = orders.filter(order => order.status !== "complete");
+          return ongoingOrders.length > 0 ? (
+            ongoingOrders.map(order => (
+              <button key={order.id} onClick={() => handleOrderSelection(order)}>
+                {order.customer} - Order #{order.id}
+              </button>
+            ))
+          ) : (
+            <p className="no-orders">No ongoing orders</p>
+          );
+        })()}
       </div>
       ) : currentPage === "payment" ? (
         <div className="dashboard">
