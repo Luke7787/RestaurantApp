@@ -217,7 +217,6 @@ function App() {
                 }}
               />
             </div>
-      
             <button onClick={() => setCurrentPage("orders")} className="back-button">Back to Orders</button>
           </div>
         </div>      
@@ -303,6 +302,12 @@ function App() {
       ) : currentPage === "payment" ? (
         <div className="dashboard">
         <div className="payment-card">
+        <button 
+          className="top-left-back-button" 
+          onClick={handleReceivePayment}
+        >
+          &larr;
+        </button>
           <h1>💳 Payment for {selectedOrder.customer}</h1>
           <h1>Order #{selectedOrder.id}</h1>
 
@@ -318,7 +323,6 @@ function App() {
           <h2 className="total-price">Total: {selectedOrder.total}</h2>
 
           <button onClick={handlePayment} className="tap-to-pay">Tap to Pay</button>
-          <button onClick={() => handleGoBack("selectOrder")} className="back-button">Back to Order Selection</button>
         </div>
       </div>      
       ) : (
