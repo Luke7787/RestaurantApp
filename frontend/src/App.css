@@ -259,7 +259,7 @@ button:hover:before {
   color: #2A5298;
   font-weight: bold;
   font-size: 20px;
-  margin-top: 20px;
+  margin-top: 15px;
   text-align: center;
   letter-spacing: 0.4px;
 }
@@ -471,4 +471,20 @@ button:hover:before {
 
 .top-left-back-button:hover {
   color: #1E3C72;
+}
+
+/* Make both sections flex containers that align buttons the same way */
+.active-orders,
+.complete-orders {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* centers buttons horizontally */
+  width: 100%;
+}
+
+/* Force the same button width in both sections */
+.active-orders button,
+.complete-orders button {
+  width: 95% !important;      /* same width as your global button style */
+  max-width: 350px !important; /* keep the same max-width so they match */
 }

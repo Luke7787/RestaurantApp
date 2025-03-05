@@ -16,9 +16,9 @@ function App() {
   const [dateError, setDateError] = useState("");
 
   const [orders, setOrders] = useState([
-    { id: 101, customer: "John Doe", items: ["Taco x2 - $3.44", "Drinks x2 - $1.44", "Tax - $0.50"], total: "$5.38", status: "new" },
-    { id: 166, customer: "Jane Smith", items: ["Burrito - $4.99", "Lemonade - $1.50", "Tax - $0.50"], total: "$6.99", status: "new" },
-    { id: 202, customer: "Mike Brown", items: ["Quesadilla - $6.89", "Iced Tea - $1.00", "Tax - $0.60"], total: "$8.49", status: "new" }
+    { id: 101, customer: "Nathan Doe", items: ["Taco x2 - $3.44", "Drinks x2 - $1.44", "Tax - $0.50"], total: "$5.38", status: "new" },
+    { id: 166, customer: "Andrew Smith", items: ["Burrito - $4.99", "Lemonade - $1.50", "Tax - $0.50"], total: "$6.99", status: "new" },
+    { id: 202, customer: "Stephen Brown", items: ["Quesadilla - $6.89", "Iced Tea - $1.00", "Tax - $0.60"], total: "$8.49", status: "new" }
   ]);
 
   const handleLogin = () => {
@@ -142,23 +142,38 @@ function App() {
             <button onClick={handleGoToPromotions}>Promotional Campaigns</button>
           </div>
         </div>
-      ) : currentPage === "orders" ? (
-        <div className="dashboard" style={{ position: "relative" }}>
-          <button 
-            className="top-left-back-button" 
-            onClick={handleGoBackToDashboard}
-          >
-            &larr;
-          </button>
-          <h1>Orders</h1>
-          {orders.map((order) => (
-            <button key={order.id} onClick={() => handleSelectNewOrder(order)}>
-              {order.customer} - Order #{order.id} {order.status !== "new" ? `(${order.status})` : ""}
+        ) : currentPage === "orders" ? (
+          <div className="dashboard" style={{ position: "relative" }}>
+            <button 
+              className="top-left-back-button" 
+              onClick={handleGoBackToDashboard}
+            >
+              &larr;
             </button>
-          ))}
-          <p className="section-header">Complete Orders</p>
-        </div>      
-      ) : currentPage === "orderDetails" ? (
+            <h1>Orders</h1>
+            {/* Active orders (non-complete) */}
+            <div className="active-orders">
+              {orders
+                .filter(order => order.status !== "complete")
+                .map((order) => (
+                  <button key={order.id} onClick={() => handleSelectNewOrder(order)}>
+                    {order.customer} - Order #{order.id} {order.status !== "new" ? `(${order.status})` : ""}
+                  </button>
+              ))}
+            </div>
+            <p className="section-header">Complete Orders</p>
+            {/* Complete orders */}
+            <div className="complete-orders">
+              {orders
+                .filter(order => order.status === "complete")
+                .map((order) => (
+                  <button key={order.id} onClick={() => handleSelectNewOrder(order)}>
+                    {order.customer} - Order #{order.id}
+                  </button>
+              ))}
+            </div>
+          </div>
+        ) : currentPage === "orderDetails" ? (
         <div className="dashboard">
           <div className="order-card">
             <h1>Order #{selectedOrder.id}</h1>
