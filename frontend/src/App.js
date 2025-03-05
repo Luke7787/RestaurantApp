@@ -143,16 +143,21 @@ function App() {
           </div>
         </div>
       ) : currentPage === "orders" ? (
-        <div className="dashboard">
+        <div className="dashboard" style={{ position: "relative" }}>
+          <button 
+            className="top-left-back-button" 
+            onClick={handleGoBackToDashboard}
+          >
+            &larr;
+          </button>
           <h1>Orders</h1>
           {orders.map((order) => (
-          <button key={order.id} onClick={() => handleSelectNewOrder(order)}>
-            {order.customer} - Order #{order.id} {order.status !== "new" ? `(${order.status})` : ""}
-          </button>
+            <button key={order.id} onClick={() => handleSelectNewOrder(order)}>
+              {order.customer} - Order #{order.id} {order.status !== "new" ? `(${order.status})` : ""}
+            </button>
           ))}
-          <p className="section-header">Finished Orders</p>
-          <button onClick={handleGoBackToDashboard}>Back to Homepage</button>
-        </div>
+          <p className="section-header">Complete Orders</p>
+        </div>      
       ) : currentPage === "orderDetails" ? (
         <div className="dashboard">
           <div className="order-card">
@@ -202,9 +207,15 @@ function App() {
           </div>
         </div>      
       ) : currentPage === "promotions" ? (
-        <div className="dashboard">
-          <h1>Promotional Campaigns</h1>
-          <p className="overview-text">Ongoing Promotions</p>
+        <div className="dashboard" style={{ position: "relative" }}>
+        <button 
+          className="top-left-back-button" 
+          onClick={handleGoBackToDashboard}
+        >
+          &larr;
+        </button>
+        <h1>Promotional Campaigns</h1>
+        <p className="overview-text">Ongoing Promotions</p>
           {campaigns.length === 0 ? (
             <p className="no-promotions">There are currently no campaigns.</p>
           ) : (
@@ -221,7 +232,6 @@ function App() {
             ))
           )}
           <button onClick={handleCreatePromotionPage}>+ New Promotion</button>
-          <button onClick={handleGoBackToDashboard}>Back to Homepage</button>
         </div>
       ) : currentPage === "createPromotion" ? (
         <div className="dashboard">
@@ -260,16 +270,21 @@ function App() {
           <button onClick={handleGoBackToDashboard}>Back to Homepage</button>
         </div>
       ) : currentPage === "selectOrder" ? (
-        <div className="dashboard">
-          <h1>Receive Payment</h1>
-          <p className="overview-text">Select Order</p>
-          {orders.map((order) => (
-            <button key={order.id} onClick={() => handleOrderSelection(order)}>
-              {order.customer} - Order #{order.id}
-            </button>
-          ))}
-          <button onClick={handleGoBackToDashboard}>Back to Homepage</button>
-        </div>
+        <div className="dashboard" style={{ position: "relative" }}>
+        <button 
+          className="top-left-back-button" 
+          onClick={handleGoBackToDashboard}
+        >
+          &larr;
+        </button>
+        <h1>Receive Payment</h1>
+        <p className="overview-text">Select Order</p>
+        {orders.map((order) => (
+          <button key={order.id} onClick={() => handleOrderSelection(order)}>
+            {order.customer} - Order #{order.id}
+          </button>
+        ))}
+      </div>
       ) : currentPage === "payment" ? (
         <div className="dashboard">
         <div className="payment-card">
