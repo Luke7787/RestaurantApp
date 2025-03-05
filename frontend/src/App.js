@@ -32,12 +32,12 @@ function App() {
 
   const handleReceivePayment = () => setCurrentPage("selectOrder");
   const handleOrderSelection = (order) => {
-    setSelectedOrder(order);
+    setSelectedOrder({...order});
     setCurrentPage("payment");
   };
   
   const handlePayment = () => {
-    setOrders(prevOrders => prevOrders.filter(order => order.id !== selectedOrder.id)); 
+    setOrders(prevOrders => prevOrders.filter(order => order.id !== selectedOrder.id)); // Remove the paid order
     setCurrentPage("success");
   };  
   
@@ -90,16 +90,22 @@ function App() {
   const handleGoToOrders = () => setCurrentPage("orders");
   
   const handleSelectNewOrder = (order) => {
-    setSelectedOrder(order);
+    
+    setSelectedOrder({...order});
     setCurrentPage("orderDetails");
   };
 
-  const handleOrderStatusChange = (orderId, status, checked) => {
-    if (checked) {
-      setOrders(orders.map(order => 
-        order.id === orderId ? { ...order, status: status } : order
-      ));
-    }
+  const handleOrderStatusChange = (orderId, status) => {
+    
+    setOrders(prevOrders => prevOrders.map(order => 
+      order.id === orderId ? { ...order, status: status } : order
+    ));
+    
+    
+    setSelectedOrder(prevSelected => ({
+      ...prevSelected,
+      status: status
+    }));
   };
 
   const handleGoBack = (page) => {
@@ -171,14 +177,10 @@ function App() {
                 type="checkbox" 
                 id="progress" 
                 checked={selectedOrder.status === "in progress"}
-                onChange={(e) => {
-                  if (e.target.checked) {
-                    
-                    handleOrderStatusChange(selectedOrder.id, "in progress", true);
-                  } else {
-                    
-                    handleOrderStatusChange(selectedOrder.id, "new", true);
-                  }
+                onChange={() => {
+                  
+                  const newStatus = selectedOrder.status === "in progress" ? "new" : "in progress";
+                  handleOrderStatusChange(selectedOrder.id, newStatus);
                 }} 
               />
             </div>
@@ -188,14 +190,10 @@ function App() {
                 type="checkbox" 
                 id="complete" 
                 checked={selectedOrder.status === "complete"}
-                onChange={(e) => {
-                  if (e.target.checked) {
-                    
-                    handleOrderStatusChange(selectedOrder.id, "complete", true);
-                  } else {
-                    
-                    handleOrderStatusChange(selectedOrder.id, "new", true);
-                  }
+                onChange={() => {
+                  
+                  const newStatus = selectedOrder.status === "complete" ? "new" : "complete";
+                  handleOrderStatusChange(selectedOrder.id, newStatus);
                 }}
               />
             </div>
